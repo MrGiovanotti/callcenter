@@ -41,7 +41,7 @@ public class Break implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "users_id")
-	private Users user;
+	private User user;
 
 	public Integer getId() {
 		return id;
@@ -91,11 +91,11 @@ public class Break implements Serializable {
 		this.duration = duration;
 	}
 
-	public Users getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

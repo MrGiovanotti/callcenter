@@ -14,8 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.apache.tomcat.jni.User;
-
 @Entity
 @Table(name = "call_info")
 public class CallInfo implements Serializable {
