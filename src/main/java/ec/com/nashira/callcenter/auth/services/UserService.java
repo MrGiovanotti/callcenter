@@ -9,11 +9,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ec.com.nashira.callcenter.entities.User;
 import ec.com.nashira.callcenter.repositories.UserRepository;
 
+@Service
 public class UserService implements UserDetailsService {
 
 	@Autowired
@@ -24,6 +26,7 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsernameAndDeleted(username, false);
 		if (user == null) {
+			// TODO Save log
 			throw new UsernameNotFoundException("El usuario " + username + " no existe");
 		}
 		List<GrantedAuthority> authorities = user.getAuthorities().stream()
