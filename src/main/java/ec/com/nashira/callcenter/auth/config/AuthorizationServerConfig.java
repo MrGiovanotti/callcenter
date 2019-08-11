@@ -26,10 +26,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private AuthenticationManager authenticationManager;
 
 	// TODO Put this in a properties file
-	final int ACCESS_TOKEN_VALIDITY_SECONDS = 3600;
-	final int REFRESH_TOKEN_VALIDITY_SECONDS = 3600;
-	final String CLIENT_ID = "nashiracallcenterfront";
-	final String CLIENT_P = "nash.solutions2019";
+	final static int ACCESS_TOKEN_VALIDITY_SECONDS = 3600;
+	final static int REFRESH_TOKEN_VALIDITY_SECONDS = 3600;
+	final static String CLIENT_ID = "nashiracallcenterfront";
+	final static String CLIENT_P = "nash.solutions2019";
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -38,7 +38,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("CLIENT_ID").secret(passwordEncoder.encode("CLIENT_P")).scopes("read", "write")
+		clients.inMemory().withClient(CLIENT_ID).secret(passwordEncoder.encode(CLIENT_P)).scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
 				.accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
 				.refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
