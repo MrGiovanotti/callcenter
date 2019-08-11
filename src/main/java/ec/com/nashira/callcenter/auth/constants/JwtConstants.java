@@ -38,4 +38,8 @@ public class JwtConstants {
 			+ "ibnfzYUFlGFUB6wLSmSPm8SvBlxWlgn9M4i118S/f37JQddsVGsrM3CUyJVk4t9t\n" + "SQIDAQAB\n"
 			+ "-----END PUBLIC KEY-----";
 
+	public static final String[] ALLOWED_HEADERS = { "Content-Type", "Authorization" };
+
+	public static final String[] ALLOWED_HTTP_METHODS = { "GET", "POST", "PUT", "DELETE", "OPTIONS" };
+
 }
