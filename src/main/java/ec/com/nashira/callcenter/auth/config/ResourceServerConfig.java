@@ -2,6 +2,7 @@ package ec.com.nashira.callcenter.auth.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,27 +15,28 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import ec.com.nashira.callcenter.AppProperties;
 import ec.com.nashira.callcenter.auth.constants.JwtConstants;
 
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-	private static final String ALL_ROUTES = "/**";
+	@Autowired
+	private AppProperties properties;
 
-	// TODO Put this in a properties file
-	private static final String ALLOWED_APP_DOMAINS = "http://localhost:4200";
+	private static final String ALL_ROUTES = "/**";
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and().cors()
+		http.authorizeRequests().antMatchers(ALL_ROUTES).permitAll().anyRequest().authenticated().and().cors()
 				.configurationSource(corsConfigurationSource());
 	}
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
-		String[] allowedDomains = ALLOWED_APP_DOMAINS.split(",");
+		String[] allowedDomains = properties.getAllowedAppDomains().split(",");
 		config.setAllowedOrigins(Arrays.asList(allowedDomains));
 		config.setAllowedMethods(Arrays.asList(JwtConstants.ALLOWED_HTTP_METHODS));
 		config.setAllowCredentials(true);

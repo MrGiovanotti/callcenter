@@ -17,12 +17,16 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import ec.com.nashira.callcenter.AppProperties;
 import ec.com.nashira.callcenter.auth.AdditionalUserInfo;
 import ec.com.nashira.callcenter.auth.constants.JwtConstants;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+	@Autowired
+	private AppProperties properties;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -34,12 +38,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AdditionalUserInfo additionalUserInfo;
 
-	// TODO Put this in a properties file
-	final static int ACCESS_TOKEN_VALIDITY_SECONDS = 3600;
-	final static int REFRESH_TOKEN_VALIDITY_SECONDS = 3600;
-	final static String CLIENT_ID = "nashiracallcenterfront";
-	final static String CLIENT_P = "nash.solutions2019";
-
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
@@ -47,10 +45,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient(CLIENT_ID).secret(passwordEncoder.encode(CLIENT_P)).scopes("read", "write")
+		clients.inMemory().withClient(properties.getAngularClientId())
+				.secret(passwordEncoder.encode(properties.getAngularClientP())).scopes("read", "write")
 				.authorizedGrantTypes("password", "refresh_token")
-				.accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
-				.refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
+				.accessTokenValiditySeconds(properties.getAccessTokenValiditySeconds())
+				.refreshTokenValiditySeconds(properties.getRefreshTokenValiditySeconds());
 	}
 
 	@Override
