@@ -23,8 +23,12 @@ public class Logger {
 
 	public void writeLog(String text) {
 		File file = new File(getLogFileName());
+		StackTraceElement stackTraceElement = new Exception().getStackTrace()[1];
+		String className = stackTraceElement.getClassName();
+		String methodName = stackTraceElement.getMethodName();
 		try (FileWriter fw = new FileWriter(file, true); BufferedWriter bw = new BufferedWriter(fw)) {
-			bw.write(new Date() + ConstantsUtils.DASH_SEPARATOR + text + ConstantsUtils.LINE_BREAK);
+			bw.write(new Date() + ConstantsUtils.DASH_SEPARATOR + className + ConstantsUtils.PERIOD + methodName
+					+ ConstantsUtils.DASH_SEPARATOR + text + ConstantsUtils.LINE_BREAK);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
