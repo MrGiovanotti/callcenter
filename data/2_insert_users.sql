@@ -5,7 +5,7 @@ insert into users (name, username, password, enabled, deleted) values
 (' Invitado', 'invitado', '$2a$10$qfKKdBpHeRikkDBX38lQz.MkyykcB3c72zSdPuH/tOjYc9QgeV2Mu', 1, 0 );
 
 insert into authorities (name) values
-('ROLE_ADMIN'), ('ROLE_SUPERVISOR'), ('ROLE_AGENT'), ('ROLE_GUESS');
+('ROLE_ADMIN'), ('ROLE_SUPERVISOR'), ('ROLE_AGENT'), ('ROLE_GUEST');
 
 insert into users_authorities (users_id, authorities_id) values
 (1, 1), (2, 2), (3, 3);

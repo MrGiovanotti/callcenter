@@ -9,4 +9,6 @@ public class ConstantsUtils {
 
 	public static final String USER_NOT_FOUND_MESSAGE = "Usuario no encontrado";
 
+	public static final int NUMBER_ITEMS_PER_PAGE = 10;
+
 }

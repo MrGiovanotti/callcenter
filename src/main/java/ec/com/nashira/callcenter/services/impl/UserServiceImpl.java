@@ -1,6 +1,8 @@
 package ec.com.nashira.callcenter.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +18,37 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public User findByUsernameAndDeleted(String username, boolean deleted) {
-		return userRepository.findByUsernameAndDeleted(username, deleted);
+	public User findByUsername(String username) {
+		return userRepository.findByUsernameAndDeleted(username, false);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public User findById(Integer id) {
+		return userRepository.findByIdAndDeleted(id, false);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<User> findAll(Pageable pageable) {
+		return userRepository.findAll(pageable);
+	}
+
+	@Override
+	@Transactional
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
+	@Override
+	@Transactional
+	public User delete(Integer id) {
+		User user = findById(id);
+		if (user == null) {
+			return null;
+		}
+		user.setDeleted(true);
+		return userRepository.save(user);
 	}
 
 }

@@ -1,9 +1,20 @@
 package ec.com.nashira.callcenter.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ec.com.nashira.callcenter.entities.User;
 
 public interface UserService {
 
-	User findByUsernameAndDeleted(String username, boolean deleted);
+	User findById(Integer id);
+
+	User findByUsername(String username);
+
+	Page<User> findAll(Pageable pageable);
+
+	User save(User user);
+
+	User delete(Integer id);
 
 }

@@ -22,7 +22,7 @@ public class AdditionalUserInfo implements TokenEnhancer {
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		Map<String, Object> userInfo = new HashMap<>();
-		User user = userService.findByUsernameAndDeleted(authentication.getName(), false);
+		User user = userService.findByUsername(authentication.getName());
 		if (user != null) {
 			userInfo.put("user_id", user.getId());
 		}
