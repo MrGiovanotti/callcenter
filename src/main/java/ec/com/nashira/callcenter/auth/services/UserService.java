@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsernameAndDeleted(username, false);
 		if (user == null) {
-			String message = ConstantsUtils.USER_NOT_FOUND_MESSAGE.concat(ConstantsUtils.COLON_SEPARATOR)
+			String message = ConstantsUtils.NOT_FOUND_RESOURCE_MESSAGE.concat(ConstantsUtils.COLON_SEPARATOR)
 					.concat(username);
 			log.writeLog(message);
 			throw new UsernameNotFoundException(message);
