@@ -49,7 +49,7 @@ public class User implements Serializable {
 
 	private String image;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "authorities_id"), uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "users_id", "authorities_id" }) })
 	private List<Authority> authorities;

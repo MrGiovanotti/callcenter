@@ -1,5 +1,10 @@
 package ec.com.nashira.callcenter.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,9 +67,16 @@ public class UserController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<?> create(@RequestBody User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
+	public ResponseEntity<?> create(@Valid @RequestBody User user, BindingResult result) {
 		User createdUser = null;
+		if (result.hasErrors()) {
+			List<String> errors = result.getFieldErrors().stream()
+					.map(err -> err.getField().concat(ConstantsUtils.COLON_SEPARATOR).concat(err.getDefaultMessage()))
+					.collect(Collectors.toList());
+			return new GenericResponse(ConstantsUtils.VALIDATION_ERROR_MESSAGE, null, true, errors,
+					HttpStatus.BAD_REQUEST).build();
+		}
+		user.setPassword(encoder.encode(user.getPassword()));
 		try {
 			createdUser = userService.save(user);
 		} catch (Exception e) {

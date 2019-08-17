@@ -1,6 +1,8 @@
 package ec.com.nashira.callcenter.responseobjects;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -11,20 +13,28 @@ public class GenericResponse {
 	private String message;
 	private Object object;
 	private boolean hasErrors;
+	private List<String> errors;
 	private HttpStatus httpStatus;
 
 	private static final String MESSAGE = "message";
 	private static final String OBJECT = "object";
 	private static final String HAS_ERRORS = "hasErrors";
+	private static final String ERRORS = "errors";
 
-	public GenericResponse() {
-
+	public GenericResponse(String message, Object object, boolean hasErrors, List<String> errors,
+			HttpStatus httpStatus) {
+		this.message = message;
+		this.object = object;
+		this.hasErrors = hasErrors;
+		this.errors = errors;
+		this.httpStatus = httpStatus;
 	}
 
 	public GenericResponse(String message, Object object, boolean hasErrors, HttpStatus httpStatus) {
 		this.message = message;
 		this.object = object;
 		this.hasErrors = hasErrors;
+		errors = new ArrayList<>();
 		this.httpStatus = httpStatus;
 	}
 
@@ -32,14 +42,16 @@ public class GenericResponse {
 		this.message = message;
 		this.object = object;
 		hasErrors = false;
+		errors = new ArrayList<>();
 		this.httpStatus = httpStatus;
 	}
 
 	public ResponseEntity<Map<String, Object>> build() {
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> response = new LinkedHashMap<>();
 		response.put(MESSAGE, message);
 		response.put(OBJECT, object);
 		response.put(HAS_ERRORS, hasErrors);
+		response.put(ERRORS, errors);
 		return new ResponseEntity<>(response, httpStatus);
 	}
 
@@ -73,6 +85,14 @@ public class GenericResponse {
 
 	public void setHttpStatus(HttpStatus httpStatus) {
 		this.httpStatus = httpStatus;
+	}
+
+	public List<String> getErrors() {
+		return errors;
+	}
+
+	public void setErrors(List<String> errors) {
+		this.errors = errors;
 	}
 
 }
