@@ -136,4 +136,21 @@ public class UserController {
 		return new GenericResponse(ConstantsUtils.DELETED_MESSAGE, user, HttpStatus.OK).build();
 	}
 
+	@GetMapping("/exists/{username}")
+	public ResponseEntity<?> exists(@PathVariable String username) {
+		boolean exists = false;
+		User user = null;
+		try {
+			user = userService.findByUsername(username);
+		} catch (Exception e) {
+			log.writeLog(e.getMessage());
+			return new GenericResponse(ConstantsUtils.DATABASE_ERROR_MESSAGE, null, true,
+					HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		if (user != null) {
+			exists = true;
+		}
+		return new GenericResponse("", exists, HttpStatus.OK).build();
+	}
+
 }

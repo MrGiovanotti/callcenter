@@ -19,6 +19,6 @@ public class ConstantsUtils {
 	public static final String INTERNAR_SERVER_ERROR_MESSAGE = "Error interno del sistema";
 
 	// CONFIGURATIONS
-	public static final int NUMBER_ITEMS_PER_PAGE = 10;
+	public static final int NUMBER_ITEMS_PER_PAGE = 5;
 
 }
