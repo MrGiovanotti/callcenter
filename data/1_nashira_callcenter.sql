@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `nashira_callcenter`.`users` (
   `password` VARCHAR(100) NOT NULL,
   `enabled` TINYINT NOT NULL DEFAULT 1,
   `deleted` TINYINT NOT NULL DEFAULT 0,
-  `image` VARCHAR(60) NULL,
+  `image` VARCHAR(150) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
@@ -43,6 +43,7 @@ DROP TABLE IF EXISTS `nashira_callcenter`.`authorities` ;
 CREATE TABLE IF NOT EXISTS `nashira_callcenter`.`authorities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `alias` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

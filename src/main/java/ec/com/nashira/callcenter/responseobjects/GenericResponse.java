@@ -8,6 +8,9 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Represents a generic response which will be sent to front end
+ */
 public class GenericResponse {
 
 	private String message;
@@ -46,6 +49,11 @@ public class GenericResponse {
 		this.httpStatus = httpStatus;
 	}
 
+	/**
+	 * Build the response to be sent to front end
+	 *
+	 * @return ResponseEntity<Map<String, Object>>
+	 */
 	public ResponseEntity<Map<String, Object>> build() {
 		Map<String, Object> response = new LinkedHashMap<>();
 		response.put(MESSAGE, message);

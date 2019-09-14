@@ -26,6 +26,9 @@ public class AppProperties {
 	@Value("${allowed.app.domains}")
 	private String AllowedAppDomains;
 
+	@Value("${images.path}")
+	private String imagesPath;
+
 	public String getLogFilePath() {
 		return logFilePath;
 	}
@@ -48,6 +51,10 @@ public class AppProperties {
 
 	public String getAllowedAppDomains() {
 		return AllowedAppDomains;
+	}
+
+	public String getImagesPath() {
+		return imagesPath;
 	}
 
 }
