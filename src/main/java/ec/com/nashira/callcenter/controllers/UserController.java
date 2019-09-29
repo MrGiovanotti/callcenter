@@ -222,6 +222,7 @@ public class UserController {
 	@GetMapping("/exists/{username}")
 	public ResponseEntity<?> exists(@PathVariable String username) {
 		boolean exists = false;
+		String idUser = "";
 		User user = null;
 		try {
 			user = userService.findByUsername(username);
@@ -232,8 +233,9 @@ public class UserController {
 		}
 		if (user != null) {
 			exists = true;
+			idUser = user.getId().toString();
 		}
-		return new GenericResponse("", exists, HttpStatus.OK).build();
+		return new GenericResponse(idUser, exists, HttpStatus.OK).build();
 	}
 
 }
