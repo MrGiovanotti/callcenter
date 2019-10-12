@@ -1,7 +1,6 @@
 package ec.com.nashira.callcenter.auth.config;
 
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
 import ec.com.nashira.callcenter.AppProperties;
 import ec.com.nashira.callcenter.auth.constants.JwtConstants;
 
@@ -22,36 +20,36 @@ import ec.com.nashira.callcenter.auth.constants.JwtConstants;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-	@Autowired
-	private AppProperties properties;
+  @Autowired
+  private AppProperties properties;
 
-	private static final String ALL_ROUTES = "/**";
+  private static final String ALL_ROUTES = "/**";
 
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(ALL_ROUTES).permitAll().anyRequest().authenticated().and().cors()
-				.configurationSource(corsConfigurationSource());
-	}
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests().antMatchers(ALL_ROUTES).permitAll().anyRequest().authenticated().and()
+        .cors().configurationSource(corsConfigurationSource());
+  }
 
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration config = new CorsConfiguration();
-		String[] allowedDomains = properties.getAllowedAppDomains().split(",");
-		config.setAllowedOrigins(Arrays.asList(allowedDomains));
-		config.setAllowedMethods(Arrays.asList(JwtConstants.ALLOWED_HTTP_METHODS));
-		config.setAllowCredentials(true);
-		config.setAllowedHeaders(Arrays.asList(JwtConstants.ALLOWED_HEADERS));
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration(ALL_ROUTES, config);
-		return source;
-	}
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    String[] allowedDomains = properties.getAllowedAppDomains().split(",");
+    config.setAllowedOrigins(Arrays.asList(allowedDomains));
+    config.setAllowedMethods(Arrays.asList(JwtConstants.getAllowedMethods()));
+    config.setAllowCredentials(true);
+    config.setAllowedHeaders(Arrays.asList(JwtConstants.getAllowedHeaders()));
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration(ALL_ROUTES, config);
+    return source;
+  }
 
-	@Bean
-	public FilterRegistrationBean<CorsFilter> corsFilter() {
-		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(
-				new CorsFilter(corsConfigurationSource()));
-		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-		return bean;
-	}
+  @Bean
+  public FilterRegistrationBean<CorsFilter> corsFilter() {
+    FilterRegistrationBean<CorsFilter> bean =
+        new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
+    bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return bean;
+  }
 
 }

@@ -19,10 +19,10 @@ public class GenericResponse {
 	private List<String> errors;
 	private HttpStatus httpStatus;
 
-	private static final String MESSAGE = "message";
-	private static final String OBJECT = "object";
+	private static final String W_MESSAGE = "message";
+	private static final String W_OBJECT = "object";
 	private static final String HAS_ERRORS = "hasErrors";
-	private static final String ERRORS = "errors";
+	private static final String W_ERRORS = "errors";
 
 	public GenericResponse(String message, Object object, boolean hasErrors, List<String> errors,
 			HttpStatus httpStatus) {
@@ -56,10 +56,10 @@ public class GenericResponse {
 	 */
 	public ResponseEntity<Map<String, Object>> build() {
 		Map<String, Object> response = new LinkedHashMap<>();
-		response.put(MESSAGE, message);
-		response.put(OBJECT, object);
+		response.put(W_MESSAGE, message);
+		response.put(W_OBJECT, object);
 		response.put(HAS_ERRORS, hasErrors);
-		response.put(ERRORS, errors);
+		response.put(W_ERRORS, errors);
 		return new ResponseEntity<>(response, httpStatus);
 	}
 

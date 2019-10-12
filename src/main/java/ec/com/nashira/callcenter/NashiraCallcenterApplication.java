@@ -7,20 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class NashiraCallcenterApplication implements CommandLineRunner {
 
-//	@Autowired
-//	private BCryptPasswordEncoder passwordEncoder;
 
-	public static void main(String[] args) {
-		SpringApplication.run(NashiraCallcenterApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(NashiraCallcenterApplication.class, args);
+  }
 
-	@Override
-	public void run(String... args) throws Exception {
-//		String password = "nashira";
-//		for (int i = 0; i < 4; i++) {
-//			System.out.println(passwordEncoder.encode(password));
-//		}
-
-	}
+  @Override
+  public void run(String... args) throws Exception {
+    // Method to generated encoded passwords if necessary
+  }
 
 }

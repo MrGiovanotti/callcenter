@@ -2,7 +2,6 @@ package ec.com.nashira.callcenter.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,76 +11,89 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import ec.com.nashira.callcenter.entities.dto.ActionDto;
 
 @Entity
 @Table(name = "actions")
 public class Action implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-	@NotEmpty
-	private String username;
+  @NotEmpty
+  private String username;
 
-	@NotEmpty
-	private String description;
+  @NotEmpty
+  private String description;
 
-	@Column(name = "action_date")
-	@NotNull
-	private Date actionDate;
+  @Column(name = "action_date")
+  @NotNull
+  private Date actionDate;
 
-	@NotEmpty
-	private String host;
+  @NotEmpty
+  private String host;
 
-	@PrePersist
-	public void prePersist() {
-		actionDate = new Date();
-	}
+  public Action(ActionDto actionDto) {
+    id = actionDto.getId();
+    username = actionDto.getUsername();
+    description = actionDto.getDescription();
+    actionDate = actionDto.getActionDate();
+    host = actionDto.getHost();
+  }
 
-	public Integer getId() {
-		return id;
-	}
+  public Action() {
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  @PrePersist
+  public void prePersist() {
+    actionDate = new Date();
+  }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public String getUsername() {
+    return username;
+  }
 
-	public Date getActionDate() {
-		return actionDate;
-	}
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-	public void setActionDate(Date actionDate) {
-		this.actionDate = actionDate;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public String getHost() {
-		return host;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public void setHost(String host) {
-		this.host = host;
-	}
+  public Date getActionDate() {
+    return actionDate;
+  }
+
+  public void setActionDate(Date actionDate) {
+    this.actionDate = actionDate;
+  }
+
+  public String getHost() {
+    return host;
+  }
+
+  public void setHost(String host) {
+    this.host = host;
+  }
 
 }

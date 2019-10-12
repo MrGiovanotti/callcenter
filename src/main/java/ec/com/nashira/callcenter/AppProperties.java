@@ -24,7 +24,7 @@ public class AppProperties {
 	private int refreshTokenValiditySeconds;
 
 	@Value("${allowed.app.domains}")
-	private String AllowedAppDomains;
+	private String allowedAppDomains;
 
 	@Value("${images.path}")
 	private String imagesPath;
@@ -50,7 +50,7 @@ public class AppProperties {
 	}
 
 	public String getAllowedAppDomains() {
-		return AllowedAppDomains;
+		return allowedAppDomains;
 	}
 
 	public String getImagesPath() {

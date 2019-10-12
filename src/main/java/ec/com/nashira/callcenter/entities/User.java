@@ -2,7 +2,6 @@ package ec.com.nashira.callcenter.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,105 +16,122 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import ec.com.nashira.callcenter.entities.dto.UserDto;
 
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-	@NotEmpty
-	private String name;
+  @NotEmpty
+  private String name;
 
-	@NotEmpty
-	@Column(unique = true, nullable = false)
-	private String username;
+  @NotEmpty
+  @Column(unique = true, nullable = false)
+  private String username;
 
-	@NotEmpty
-	private String password;
+  @NotEmpty
+  private String password;
 
-	@NotNull
-	private boolean enabled;
+  @NotNull
+  private boolean enabled;
 
-	@NotNull
-	private boolean deleted = false;
+  @NotNull
+  private boolean deleted = false;
 
-	private String image;
+  private String image;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "authorities_id"), uniqueConstraints = {
-			@UniqueConstraint(columnNames = { "users_id", "authorities_id" }) })
-	private List<Authority> authorities;
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+  @JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "users_id"),
+      inverseJoinColumns = @JoinColumn(name = "authorities_id"),
+      uniqueConstraints = {@UniqueConstraint(columnNames = {"users_id", "authorities_id"})})
+  private List<Authority> authorities;
 
-	public Integer getId() {
-		return id;
-	}
+  public User(UserDto userDto) {
+    id = userDto.getId();
+    name = userDto.getName();
+    username = userDto.getUsername();
+    password = userDto.getPassword();
+    enabled = userDto.isEnabled();
+    deleted = false;
+    image = userDto.getImage();
+    authorities = userDto.getAuthorities();
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  public User() {
 
-	public String getName() {
-		return name;
-	}
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public String getPassword() {
-		return password;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  public String getUsername() {
+    return username;
+  }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public String getImage() {
-		return image;
-	}
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
+  }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+  public boolean isDeleted() {
+    return deleted;
+  }
 
-	public List<Authority> getAuthorities() {
-		return authorities;
-	}
+  public void setDeleted(boolean deleted) {
+    this.deleted = deleted;
+  }
 
-	public void setAuthorities(List<Authority> authorities) {
-		this.authorities = authorities;
-	}
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public List<Authority> getAuthorities() {
+    return authorities;
+  }
+
+  public void setAuthorities(List<Authority> authorities) {
+    this.authorities = authorities;
+  }
 
 }
