@@ -45,7 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
     clients.inMemory().withClient(properties.getAngularClientId())
         .secret(passwordEncoder.encode(properties.getAngularClientP())).scopes("read", "write")
-        .authorizedGrantTypes("secret", "refresh_token")
+        .authorizedGrantTypes(JwtConstants.GRANT_TYPE_SECRET, "refresh_token")
         .accessTokenValiditySeconds(properties.getAccessTokenValiditySeconds())
         .refreshTokenValiditySeconds(properties.getRefreshTokenValiditySeconds());
   }

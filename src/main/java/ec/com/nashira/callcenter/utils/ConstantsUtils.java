@@ -32,4 +32,7 @@ public class ConstantsUtils {
   // CONFIGURATIONS
   public static final int NUMBER_ITEMS_PER_PAGE = 4;
 
+  // SECURITY
+  public static final String ADMIN_ROLE = "ROLE_ADMIN";
+
 }

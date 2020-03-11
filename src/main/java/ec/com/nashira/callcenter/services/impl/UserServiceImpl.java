@@ -60,4 +60,9 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(user);
   }
 
+  @Override
+  public Page<User> findNotAdmin(Pageable pageable) {
+    return userRepository.findNotAdmin(pageable);
+  }
+
 }

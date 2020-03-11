@@ -1,10 +1,15 @@
 package ec.com.nashira.callcenter.entities.dto;
 
+import java.io.Serializable;
 import java.util.List;
 import ec.com.nashira.callcenter.entities.Authority;
 
-public class UserDto {
+public class UserDto implements Serializable {
 
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
   private Integer id;
   private String name;
   private String username;

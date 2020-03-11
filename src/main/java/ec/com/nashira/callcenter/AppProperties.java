@@ -8,53 +8,53 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties
 public class AppProperties {
 
-	@Value("${logfile.path}")
-	private String logFilePath;
+  @Value("${logfile.path}")
+  private String logFilePath;
 
-	@Value("${angular.client.id}")
-	private String angularClientId;
+  @Value("${angular.client.id}")
+  private String angularClientId;
 
-	@Value("${angular.client.p}")
-	private String angularClientP;
+  @Value("${angular.client.p}")
+  private String angularClientP;
 
-	@Value("${access.token.validity.seconds}")
-	private int accessTokenValiditySeconds;
+  @Value("${access.token.validity.seconds}")
+  private int accessTokenValiditySeconds;
 
-	@Value("${refresh.token.validity.seconds}")
-	private int refreshTokenValiditySeconds;
+  @Value("${refresh.token.validity.seconds}")
+  private int refreshTokenValiditySeconds;
 
-	@Value("${allowed.app.domains}")
-	private String allowedAppDomains;
+  @Value("${allowed.app.domains}")
+  private String allowedAppDomains;
 
-	@Value("${images.path}")
-	private String imagesPath;
+  @Value("${images.path}")
+  private String imagesPath;
 
-	public String getLogFilePath() {
-		return logFilePath;
-	}
+  public String getLogFilePath() {
+    return logFilePath;
+  }
 
-	public String getAngularClientId() {
-		return angularClientId;
-	}
+  public String getAngularClientId() {
+    return angularClientId;
+  }
 
-	public String getAngularClientP() {
-		return angularClientP;
-	}
+  public String getAngularClientP() {
+    return angularClientP;
+  }
 
-	public int getAccessTokenValiditySeconds() {
-		return accessTokenValiditySeconds;
-	}
+  public int getAccessTokenValiditySeconds() {
+    return accessTokenValiditySeconds;
+  }
 
-	public int getRefreshTokenValiditySeconds() {
-		return refreshTokenValiditySeconds;
-	}
+  public int getRefreshTokenValiditySeconds() {
+    return refreshTokenValiditySeconds;
+  }
 
-	public String getAllowedAppDomains() {
-		return allowedAppDomains;
-	}
+  public String getAllowedAppDomains() {
+    return allowedAppDomains;
+  }
 
-	public String getImagesPath() {
-		return imagesPath;
-	}
+  public String getImagesPath() {
+    return imagesPath;
+  }
 
 }

@@ -27,12 +27,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().antMatchers(ALL_ROUTES).permitAll().anyRequest().authenticated().and()
-        .cors().configurationSource(corsConfigurationSource());
+    http.authorizeRequests().antMatchers("/user/exists/**", "/user/image/**").permitAll()
+        .anyRequest().authenticated().and().cors()
+        .configurationSource(corsConfigurationSource(properties));
   }
 
   @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
+  public CorsConfigurationSource corsConfigurationSource(AppProperties properties) {
     CorsConfiguration config = new CorsConfiguration();
     String[] allowedDomains = properties.getAllowedAppDomains().split(",");
     config.setAllowedOrigins(Arrays.asList(allowedDomains));
@@ -47,7 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   public FilterRegistrationBean<CorsFilter> corsFilter() {
     FilterRegistrationBean<CorsFilter> bean =
-        new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
+        new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource(properties)));
     bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return bean;
   }

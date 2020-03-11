@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,6 +56,7 @@ public class UserController {
   @Autowired
   private AppProperties properties;
 
+  @Secured({"ROLE_ADMIN"})
   @GetMapping("/index/{page}")
   public ResponseEntity<Map<String, Object>> index(@PathVariable("page") int pageNumber) {
     Page<User> users = null;
@@ -69,6 +71,23 @@ public class UserController {
     return new GenericResponse("", users, HttpStatus.OK).build();
   }
 
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR"})
+  @GetMapping("/notadmin/{page}")
+  public ResponseEntity<Map<String, Object>> getNotAdminUsers(
+      @PathVariable("page") int pageNumber) {
+    Page<User> users = null;
+    try {
+      users = userService.findNotAdmin(PageRequest.of(pageNumber,
+          ConstantsUtils.NUMBER_ITEMS_PER_PAGE, Sort.by(Sort.Direction.ASC, PROPERTY_TO_ORDER_BY)));
+    } catch (Exception e) {
+      log.writeLog(e.getMessage());
+      return new GenericResponse(ConstantsUtils.DATABASE_ERROR_MESSAGE, null, true,
+          HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+    return new GenericResponse("", users, HttpStatus.OK).build();
+  }
+
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR", "ROLE_AGENT"})
   @GetMapping("/show/{id}")
   public ResponseEntity<Map<String, Object>> show(@PathVariable Integer id) {
     User user = null;
@@ -86,6 +105,7 @@ public class UserController {
     return new GenericResponse(ConstantsUtils.FOUND_RESOURCE_MESSAGE, user, HttpStatus.OK).build();
   }
 
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR"})
   @PostMapping("/create")
   public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody UserDto userDto,
       BindingResult result) {
@@ -110,6 +130,7 @@ public class UserController {
     return new GenericResponse(ConstantsUtils.CREATED_MESSAGE, createdUser, HttpStatus.OK).build();
   }
 
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR"})
   @PutMapping("/update")
   public ResponseEntity<Map<String, Object>> update(@RequestBody UserDto userDto,
       BindingResult result) {
@@ -150,6 +171,7 @@ public class UserController {
         .build();
   }
 
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR"})
   @PutMapping("/change-password")
   public ResponseEntity<Map<String, Object>> changePassword(@RequestBody UserDto userDto,
       BindingResult result) {
@@ -186,6 +208,7 @@ public class UserController {
         HttpStatus.CREATED).build();
   }
 
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR"})
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<Map<String, Object>> delete(@PathVariable Integer id) {
     User user = null;
@@ -204,6 +227,7 @@ public class UserController {
     return new GenericResponse(ConstantsUtils.DELETED_MESSAGE, user, HttpStatus.OK).build();
   }
 
+  @Secured({"ROLE_ADMIN", "ROLE_SUPERVISOR", "ROLE_AGENT"})
   @PostMapping("/upload")
   public ResponseEntity<Map<String, Object>> upload(@RequestParam MultipartFile file,
       @RequestParam Integer id) {
