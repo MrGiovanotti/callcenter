@@ -1,4 +1,4 @@
-# nashira-callcenter
+# Callcenter
 A system to manage callcenter operations.
 Backend developed in java 1.8, using Springboot framework.
 
