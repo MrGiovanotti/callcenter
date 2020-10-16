@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import ec.com.nashira.callcenter.entities.dto.ActionDto;
 
 @Entity
@@ -26,17 +24,13 @@ public class Action implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @NotEmpty
   private String username;
 
-  @NotEmpty
   private String description;
 
   @Column(name = "action_date")
-  @NotNull
   private Date actionDate;
 
-  @NotEmpty
   private String host;
 
   public Action(ActionDto actionDto) {

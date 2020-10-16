@@ -1,7 +1,7 @@
 package ec.com.nashira.callcenter.auth.services;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ec.com.nashira.callcenter.entities.Authority;
 import ec.com.nashira.callcenter.entities.User;
 import ec.com.nashira.callcenter.logger.Logger;
 import ec.com.nashira.callcenter.repositories.UserRepository;
@@ -34,8 +35,11 @@ public class UserService implements UserDetailsService {
       log.writeLog(message);
       throw new UsernameNotFoundException(message);
     }
-    List<GrantedAuthority> authorities = user.getAuthorities().stream()
-        .map(auth -> new SimpleGrantedAuthority(auth.getName())).collect(Collectors.toList());
+
+    Authority authority = user.getAuthority();
+    List<GrantedAuthority> authorities =
+        Arrays.asList(new SimpleGrantedAuthority(authority.getName()));
+
     return new org.springframework.security.core.userdetails.User(username, user.getPassword(),
         user.isEnabled(), true, true, true, authorities);
   }

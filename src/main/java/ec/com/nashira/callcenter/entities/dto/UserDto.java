@@ -1,7 +1,8 @@
 package ec.com.nashira.callcenter.entities.dto;
 
 import java.io.Serializable;
-import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import ec.com.nashira.callcenter.entities.Authority;
 
 public class UserDto implements Serializable {
@@ -11,13 +12,24 @@ public class UserDto implements Serializable {
    */
   private static final long serialVersionUID = 1L;
   private Integer id;
+
+  @NotEmpty
   private String name;
+
+  @NotEmpty
   private String username;
+
+  @NotEmpty
   private String password;
+
   private boolean enabled;
+
   private boolean deleted;
+
   private String image;
-  private List<Authority> authorities;
+
+  @NotNull
+  private Authority authority;
 
   public Integer getId() {
     return id;
@@ -75,12 +87,12 @@ public class UserDto implements Serializable {
     this.image = image;
   }
 
-  public List<Authority> getAuthorities() {
-    return authorities;
+  public Authority getAuthority() {
+    return authority;
   }
 
-  public void setAuthorities(List<Authority> authorities) {
-    this.authorities = authorities;
+  public void setAuthoritiy(Authority authority) {
+    this.authority = authority;
   }
 
 

@@ -2,6 +2,8 @@ package ec.com.nashira.callcenter.entities.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ActionDto implements Serializable {
   /**
@@ -9,9 +11,17 @@ public class ActionDto implements Serializable {
    */
   private static final long serialVersionUID = 1L;
   private Integer id;
+
+  @NotEmpty
   private String username;
+
+  @NotEmpty
   private String description;
+
+  @NotNull
   private Date actionDate;
+
+  @NotEmpty
   private String host;
 
   public Integer getId() {

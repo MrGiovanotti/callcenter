@@ -1,5 +1,6 @@
 package ec.com.nashira.callcenter.services.impl;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional(readOnly = true)
+  public User findByIdForNotAdmin(Integer id) {
+    return userRepository.findByIdForNotAdmin(id);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
   public Page<User> findAll(Pageable pageable) {
     return userRepository.findAll(pageable);
   }
@@ -61,8 +68,18 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Page<User> findNotAdmin(Pageable pageable) {
-    return userRepository.findNotAdmin(pageable);
+  public Page<User> findAllForNotAdmin(Pageable pageable) {
+    return userRepository.findAllForNotAdmin(pageable);
+  }
+
+  @Override
+  public List<User> findAllByNameContaining(String name) {
+    return userRepository.findAllByNameContainingAndDeleted(name, false);
+  }
+
+  @Override
+  public List<User> findAllByNameContainingForNotAdmin(String name) {
+    return userRepository.findAllByNameContainingForNotAdmin(name);
   }
 
 }

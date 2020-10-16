@@ -30,7 +30,7 @@ public class ConstantsUtils {
   public static final String DELETE_FILE_ERROR_MESSAGE = "No se pudo borrar un archivo";
 
   // CONFIGURATIONS
-  public static final int NUMBER_ITEMS_PER_PAGE = 4;
+  public static final int NUMBER_ITEMS_PER_PAGE = 5;
 
   // SECURITY
   public static final String ADMIN_ROLE = "ROLE_ADMIN";
